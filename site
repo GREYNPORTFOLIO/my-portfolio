@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greyn Art | Ilustrador Digital</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0a0a0a',
+                        darker: '#050505',
+                        darkest: '#010101',
+                        neonpink: '#ff2a6d',
+                        neonred: '#ff003c',
+                        neonblue: '#05d9e8',
+                        neonpurple: '#d300c5',
+                    },
+                    fontFamily: {
+                        sans: ['"Exo 2"', 'sans-serif'],
+                        mono: ['"Major Mono Display"', 'monospace'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 6s infinite cubic-bezier(0.4, 0, 0.6, 1)',
+                        'float': 'float 6s ease-in-out infinite',
+                        'neon-flicker': 'neon-flicker 1.5s infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'neon-flicker': {
+                            '0%, 19%, 21%, 23%, 25%, 54%, 56%, 100%': {
+                                'text-shadow': '0 0 5px #ff2a6d, 0 0 10px #ff2a6d',
+                                'box-shadow': '0 0 5px #ff2a6d, 0 0 10px #ff2a6d',
+                            },
+                            '20%, 24%, 55%': {
+                                'text-shadow': 'none',
+                                'box-shadow': 'none',
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&family=Major+Mono+Display&display=swap');
+        
+        body {
+            background-color: #0a0a0a;
+            color: #f1f1f1;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        
+        .neon-text {
+            text-shadow: 0 0 5px #ff2a6d, 0 0 10px #ff2a6d;
+        }
+        
+        .neon-text-blue {
+            text-shadow: 0 0 5px #05d9e8, 0 0 10px #05d9e8;
+        }
+        
+        .neon-text-purple {
+            text-shadow: 0 0 5px #d300c5, 0 0 10px #d300c5;
+        }
+        
+        .neon-border {
+            box-shadow: 0 0 5px #ff2a6d, 0 0 10px #ff2a6d;
+        }
+        
+        .neon-border-blue {
+            box-shadow: 0 0 5px #05d9e8, 0 0 10px #05d9e8;
+        }
+        
+        .neon-hover:hover {
+            text-shadow: 0 0 5px #ff2a6d, 0 0 10px #ff2a6d;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item {
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,42,109,0.2) 0%, rgba(5,217,232,0.2) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+        
+        .gallery-item:hover::before {
+            opacity: 1;
+        }
+        
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+        
+        .gallery-item img {
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            background: rgba(5, 5, 5, 0.8);
+            padding: 10px;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            bottom: 0;
+        }
+        
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .lightbox.show {
+            opacity: 1;
+        }
+        
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .lightbox.show .lightbox-content {
+            transform: scale(1);
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .lightbox-close:hover {
+            color: #ff2a6d;
+            transform: rotate(90deg);
+        }
+        
+        .section-divider {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ff2a6d, #05d9e8, transparent);
+            margin: 60px auto;
+            width: 80%;
+        }
+        
+        input, textarea, select {
+            background-color: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #ff2a6d;
+            box-shadow: 0 0 5px #ff2a6d, 0 0 10px #ff2a6d;
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background: linear-gradient(90deg, #ff2a6d, #05d9e8);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: 100;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, #ff2a6d, #05d9e8);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+        
+        .tooltip {
+            position: relative;
+        }
+        
+        .tooltip-text {
+            visibility: hidden;
+            width: 120px;
+            background-color: #050505;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            border: 1px solid #ff2a6d;
+        }
+        
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: #ff2a6d;
+            top: 10%;
+            left: 5%;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .shape-2 {
+            width: 400px;
+            height: 400px;
+            background: #05d9e8;
+            bottom: 10%;
+            right: 5%;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+        
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            background: #d300c5;
+            top: 50%;
+            right: 15%;
+            animation: float 7s ease-in-out infinite 2s;
+        }
+        
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+        
+        .commission-card {
+            transition: all 0.3s ease;
+            background: linear-gradient(145deg, rgba(10,10,10,0.8) 0%, rgba(5,5,5,0.9) 100%);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .commission-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(255,42,109,0.2);
+            border-color: rgba(255,42,109,0.3);
+        }
+        
+        .commission-card.featured {
+            border: 1px solid rgba(255,42,109,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .commission-card.featured::before {
+            content: 'POPULAR';
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: #ff2a6d;
+            color: white;
+            padding: 5px 30px;
+            transform: rotate(45deg);
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255,42,109,0.8);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 99;
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: #ff2a6d;
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-text {
+                font-size: 2.5rem;
+            }
+            
+            .shape-1, .shape-2, .shape-3 {
+                display: none;
+            }
+            
+            .gallery-caption {
+                bottom: 0;
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating background shapes -->
+    <div class="floating-shape shape-1"></div>
+    <div class="floating-shape shape-2"></div>
+    <div class="floating-shape shape-3"></div>
+    
+    <!-- Scroll progress bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <!-- Back to top button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up text-white"></i>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-darker/90 backdrop-blur-sm z-50 border-b border-gray-800">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="font-mono text-xl font-bold neon-text animate__animated animate__fadeIn">GREYN_ART</a>
+            <div class="hidden md:flex space-x-8">
+                <a href="#home" class="nav-link animate__animated animate__fadeIn animate__delay-1s">Início</a>
+                <a href="#gallery" class="nav-link animate__animated animate__fadeIn animate__delay-1s">Galeria</a>
+                <a href="#about" class="nav-link animate__animated animate__fadeIn animate__delay-1s">Sobre</a>
+                <a href="#commissions" class="nav-link animate__animated animate__fadeIn animate__delay-1s">Comissões</a>
+                <a href="#contact" class="nav-link animate__animated animate__fadeIn animate__delay-1s">Contato</a>
+            </div>
+            <button class="md:hidden text-white focus:outline-none" id="menuToggle">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu (hidden by default) -->
+    <div class="md:hidden fixed top-16 right-0 w-64 bg-darker/95 backdrop-blur-md border-l border-b border-gray-800 z-50 hidden transform translate-x-full transition-transform duration-300" id="mobileMenu">
+        <div class="flex flex-col p-4 space-y-4">
+            <a href="#home" class="nav-link py-2">Início</a>
+            <a href="#gallery" class="nav-link py-2">Galeria</a>
+            <a href="#about" class="nav-link py-2">Sobre</a>
+            <a href="#commissions" class="nav-link py-2">Comissões</a>
+            <a href="#contact" class="nav-link py-2">Contato</a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-16 relative overflow-hidden">
+        <div class="container mx-auto px-4 py-20 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0 animate__animated animate__fadeInLeft">
+                <h1 class="hero-text text-4xl md:text-6xl font-bold mb-4">Olá, eu sou <span class="neon-text animate-neon">Greyn</span></h1>
+                <p class="text-lg text-gray-300 mb-8">Ilustrador digital especializado em personagens vibrantes e atmosferas futuristas.</p>
+                <div class="flex space-x-4">
+                    <a href="#gallery" class="inline-block bg-neonred hover:bg-neonpink text-white font-bold py-3 px-6 rounded-full transition duration-300 neon-border hover:animate-pulse">
+                        Ver Galeria
+                    </a>
+                    <a href="#commissions" class="inline-block bg-transparent border border-neonblue text-neonblue hover:bg-neonblue/10 font-bold py-3 px-6 rounded-full transition duration-300 neon-border-blue">
+                        Comissões
+                    </a>
+                </div>
+                
+                <div class="mt-8 flex space-x-4">
+                    <a href="https://instagram.com/greyn_art" target="_blank" class="social-icon text-2xl text-neonpink hover:text-white">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://twitter.com/greyn_art" target="_blank" class="social-icon text-2xl text-neonblue hover:text-white">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://artstation.com/greyn" target="_blank" class="social-icon text-2xl text-neonpurple hover:text-white">
+                        <i class="fab fa-artstation"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center animate__animated animate__fadeInRight animate__delay-1s">
+                <div class="relative">
+                    <img src="https://media.discordapp.net/attachments/1029143960968495136/1368129923969191996/8a9dfe7593fc6aab0b78a75524b3cd96_high.png?ex=681719c8&is=6815c848&hm=4cce48745ce3201f12cf7f15329b0da2720e8ca7ac2a2a0d8756433cdee7121e&=&format=webp&quality=lossless&width=356&height=627" alt="Featured Artwork" class="rounded-lg max-h-[70vh] border-2 border-gray-800 hover:border-neonpink transition-all duration-300 shadow-xl">
+                    <div class="absolute -inset-2 rounded-lg bg-neonpink/20 blur-lg z-[-1] animate-pulse-slow"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-20 bg-darker/50 backdrop-blur-sm">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 neon-text animate__animated animate__fadeIn">Galeria</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Explore meu portfólio de ilustrações digitais, fanarts e comissões</p>
+            </div>
+            
+            <!-- Gallery Navigation -->
+            <div class="flex flex-wrap justify-center mb-12 gap-2 animate__animated animate__fadeIn">
+                <button class="gallery-filter px-4 py-2 rounded-full bg-neonred text-white font-medium" data-category="all">Todos</button>
+                <button class="gallery-filter px-4 py-2 rounded-full bg-transparent border border-neonred text-neonred hover:bg-neonred hover:text-white transition font-medium" data-category="fanarts">Fanarts</button>
+                <button class="gallery-filter px-4 py-2 rounded-full bg-transparent border border-neonblue text-neonblue hover:bg-neonblue hover:text-white transition font-medium" data-category="ocs">OCs</button>
+                <button class="gallery-filter px-4 py-2 rounded-full bg-transparent border border-neonpurple text-neonpurple hover:bg-neonpurple hover:text-white transition font-medium" data-category="commissions">Comissões</button>
+            </div>
+            
+            <!-- Gallery Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-grid">
+                <!-- Fanart 1 -->
+                <div class="gallery-item fanarts" data-src="https://media.discordapp.net/attachments/1029143960968495136/1368129923969191996/8a9dfe7593fc6aab0b78a75524b3cd96_high.png?ex=681719c8&is=6815c848&hm=4cce48745ce3201f12cf7f15329b0da2720e8ca7ac2a2a0d8756433cdee7121e&=&format=webp&quality=lossless&width=356&height=627">
+                    <img src="https://media.discordapp.net/attachments/1029143960968495136/1368129923969191996/8a9dfe7593fc6aab0b78a75524b3cd96_high.png?ex=681719c8&is=6815c848&hm=4cce48745ce3201f12cf7f15329b0da2720e8ca7ac2a2a0d8756433cdee7121e&=&format=webp&quality=lossless&width=356&height=627" alt="Fanart 1" class="w-full h-auto rounded-lg cursor-pointer">
+                    <div class="gallery-caption">
+                        <p class="text-white font-medium">Fanart</p>
+                        <p class="text-gray-300 text-sm">Personagem X</p>
+                    </div>
+                </div>
+                
+                <!-- OC 1 -->
+                <div class="gallery-item ocs" data-src="https://media.discordapp.net/attachments/1029143960968495136/1367793771617718272/67d9db4fe8c154b24bf233fd41445d6d_high.png?ex=68173237&is=6815e0b7&hm=9f74ce1d82660bd10965d4b4f729f1881662c743872462da752008c13d219d93&=&format=webp&quality=lossless&width=818&height=546">
+                    <img src="https://media.discordapp.net/attachments/1029143960968495136/1367793771617718272/67d9db4fe8c154b24bf233fd41445d6d_high.png?ex=68173237&is=6815e0b7&hm=9f74ce1d82660bd10965d4b4f729f1881662c743872462da752008c13d219d93&=&format=webp&quality=lossless&width=818&height=546" alt="Original Character 1" class="w-full h-auto rounded-lg cursor-pointer">
+                    <div class="gallery-caption">
+                        <p class="text-white font-medium">OC</p>
+                        <p class="text-gray-300 text-sm">Aurora</p>
+                    </div>
+                </div>
+                
+                <!-- Commission 1 -->
+                <div class="gallery-item commissions" data-src="https://media.discordapp.net/attachments/1029143960968495136/1363326997110984844/aa8d234279ccf1d269ec7ee549cfe49c_high.png?ex=6816c435&is=681572b5&hm=06dcccf408eaec222035c99d9d5f98d555ef62310b8ef9928392b55f1de91a75&=&format=webp&quality=lossless&width=470&height=627">
+                    <img src="https://media.discordapp.net/attachments/1029143960968495136/1363326997110984844/aa8d234279ccf1d269ec7ee549cfe49c_high.png?ex=6816c435&is=681572b5&hm=06dcccf408eaec222035c99d9d5f98d555ef62310b8ef9928392b55f1de91a75&=&format=webp&quality=lossless&width=470&height=627" alt="Commission 1" class="w-full h-auto rounded-lg cursor-pointer">
+                    <div class="gallery-caption">
+                        <p class="text-white font-medium">Comissão</p>
+                        <p class="text-gray-300 text-sm">Cliente A</p>
+                    </div>
+                </div>
+                
+                <!-- Fanart 2 -->
+                <div class="gallery-item fanarts" data-src="https://media.discordapp.net/attachments/1029143960968495136/1368129925223026718/3d0ddcb6b6ce42cc77a56a1787b3a7e390b89668_high.png?ex=681719c8&is=6815c848&hm=8015bb7553bbae6e7c7f5da172fd39c5ff35165d9c3472b6e3ec99ed07765b4e&=&format=webp&quality=lossless&width=358&height=627">
+                    <img src="https://media.discordapp.net/attachments/1029143960968495136/1368129925223026718/3d0ddcb6b6ce42cc77a56a1787b3a7e390b89668_high.png?ex=681719c8&is=6815c848&hm=8015bb7553bbae6e7c7f5da172fd39c5ff35165d9c3472b6e3ec99ed07765b4e&=&format=webp&quality=lossless&width=358&height=627" alt="Fanart 2" class="w-full h-auto rounded-lg cursor-pointer">
+                    <div class="gallery-caption">
+                        <p class="text-white font-medium">Fanart</p>
+                        <p class="text-gray-300 text-sm">Personagem Y</p>
+                    </div>
+                </div>
+                
+                <!-- OC 2 -->
+                <div class="gallery-item ocs" data-src="https://media.discordapp.net/attachments/1029143960968495136/1367793771038773299/cfc5bf6e4be5042bbb83b0ff8e870392_high.png?ex=68173237&is=6815e0b7&hm=dec98e53e00b345c8524173a740ed6befb20cec3264da86dfd7bdf7dc79a2e70&=&format=webp&quality=lossless&width=818&height=546">
+                    <img src="https://media.discordapp.net/attachments/1029143960968495136/1367793771038773299/cfc5bf6e4be5042bbb83b0ff8e870392_high.png?ex=68173237&is=6815e0b7&hm=dec98e53e00b345c8524173a740ed6befb20cec3264da86dfd7bdf7dc79a2e70&=&format=webp&quality=lossless&width=818&height=546" alt="Original Character 2" class="w-full h-auto rounded-lg cursor-pointer">
+                    <div class="gallery-caption">
+                        <p class="text-white font-medium">OC</p>
+                        <p class="text-gray-300 text-sm">Specter</p>
+                    </div>
+                </div>
+                
+                <!-- Commission 2 -->
+                <div class="gallery-item commissions" data-src="https://media.discordapp.net/attachments/1029143960968495136/1361536867753005146/5cf9da2c1f5ebe62a14c6565934a9235_high.png?ex=6816d885&is=68158705&hm=26f2f97708d40e65946229f3ecd666a5a773daa04138b75a58701926a11138e1&=&format=webp&quality=lossless&width=470&height=627">
+                    <img src="https://media.discordapp.net/attachments/1029143960968495136/1361536867753005146/5cf9da2c1f5ebe62a14c6565934a9235_high.png?ex=6816d885&is=68158705&hm=26f2f97708d40e65946229f3ecd666a5a773daa04138b75a58701926a11138e1&=&format=webp&quality=lossless&width=470&height=627" alt="Commission 2" class="w-full h-auto rounded-lg cursor-pointer">
+                    <div class="gallery-caption">
+                        <p class="text-white font-medium">Comissão</p>
+                        <p class="text-gray-300 text-sm">Cliente B</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block bg-transparent border border-neonpink text-neonpink hover:bg-neonpink hover:text-white font-bold py-3 px-6 rounded-full transition duration-300">
+                    Ver Mais Trabalhos
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <hr class="section-divider">
+
+    <!-- About Section -->
+    <section id="about" class="py-20 relative">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 neon-text animate__animated animate__fadeIn">Sobre o Artista</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Conheça mais sobre mim e meu processo criativo</p>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/3 flex justify-center animate__animated animate__fadeInLeft">
+                    <div class="relative">
+                        <img src="https://via.placeholder.com/400x500/050505/ff2a6d?text=Artist+Photo" alt="Greyn" class="rounded-lg max-h-[500px] border-2 border-gray-800 hover:border-neonblue transition-all duration-300">
+                        <div class="absolute -inset-2 rounded-lg bg-neonblue/20 blur-lg z-[-1] animate-pulse-slow"></div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-2/3 animate__animated animate__fadeInRight">
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold mb-4 text-neonpink">Biografia</h3>
+                        <p class="text-gray-300 mb-6">
+                            Greyn é um ilustrador digital brasileiro com mais de 5 anos de experiência criando personagens vibrantes e cenários atmosféricos. 
+                            Seu trabalho combina influências do cyberpunk, anime e arte conceitual ocidental para criar um estilo único que chama atenção.
+                        </p>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <h3 class="text-2xl font-bold mb-4 text-neonblue">Estilo e Influências</h3>
+                        <p class="text-gray-300 mb-6">
+                            Meu estilo é caracterizado por cores vibrantes, iluminação dramática e atenção aos detalhes de design. 
+                            Sou profundamente influenciado por artistas como Yoshitaka Amano, Kim Jung Gi e Loish, 
+                            além de franquias como Ghost in the Shell e Blade Runner.
+                        </p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4 text-neonpurple">Ferramentas</h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
+                            <div class="flex items-center tooltip">
+                                <i class="fas fa-paint-brush text-neonred mr-2"></i>
+                                <span class="text-gray-300">Clip Studio Paint</span>
+                                <span class="tooltip-text">Principal software para ilustração</span>
+                            </div>
+                            <div class="flex items-center tooltip">
+                                <i class="fas fa-palette text-neonred mr-2"></i>
+                                <span class="text-gray-300">Photoshop</span>
+                                <span class="tooltip-text">Edição e efeitos especiais</span>
+                            </div>
+                            <div class="flex items-center tooltip">
+                                <i class="fas fa-tablet-alt text-neonred mr-2"></i>
+                                <span class="text-gray-300">Wacom Cintiq 22HD</span>
+                                <span class="tooltip-text">Tablet de desenho principal</span>
+                            </div>
+                            <div class="flex items-center tooltip">
+                                <i class="fas fa-laptop text-neonred mr-2"></i>
+                                <span class="text-gray-300">Procreate (iPad)</span>
+                                <span class="tooltip-text">Esboços e trabalhos móveis</span>
+                            </div>
+                            <div class="flex items-center tooltip">
+                                <i class="fas fa-cube text-neonred mr-2"></i>
+                                <span class="text-gray-300">Blender (3D base)</span>
+                                <span class="tooltip-text">Bases 3D e cenários</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- Commissions Section -->
+    <section id="commissions" class="py-20 bg-darker/50 backdrop-blur-sm">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 neon-text animate__animated animate__fadeIn">Comissões</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Encomende sua arte personalizada</p>
+            </div>
+            
+            <div class="max-w-5xl mx-auto">
+                <div class="grid md:grid-cols-3 gap-8 mb-12">
+                    <!-- Sketch Commission -->
+                    <div class="commission-card p-6 rounded-lg">
+                        <h3 class="text-xl font-bold mb-2 text-neonpink">Sketch</h3>
+                        <p class="text-gray-400 text-sm mb-4">Desenho rápido em preto e branco</p>
+                        <p class="text-2xl font-bold mb-4">R$ 80-150</p>
+                        <ul class="space-y-2 text-gray-300 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-neonpink mr-2"></i>
+                                <span>Linhas limpas</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-neonpink mr-2"></i>
+                                <span>1 Personagem</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-neonpink mr-2"></i>
+                                <span>Sem fundo</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="inline-block w-full bg-transparent border border-neonpink text-neonpink hover:bg-neonpink hover:text-white text-center font-bold py-2 px-4 rounded transition duration-300">
+                            Encomendar
+                        </a>
+                    </div>
+                    
+                    <!-- Flat Color Commission -->
+                    <div class="commission-card featured p-6 rounded-lg">
+                        <h3 class="text-xl font-bold mb-2 text-neonblue">Flat Color</h3>
+                        <p class="text-gray-400 text-sm mb-4">Arte com cores chapadas</p>
+                        <p class="text-2xl font-bold mb-4">R$ 150-300</p>
+                        <ul class="space-y-2 text-gray-300 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-neonblue mr-2"></i>
+                                <span>Linhas limpas</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-neonblue mr-2"></i>
+                                <span>1-2 Personagens</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-neonblue mr-2"></i>
+                                <span>Fundo simples</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-neonblue mr-2"></i>
+                                <span>1 Revisão</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="inline-block w-full bg-neonblue hover:bg-neonblue/90 text-white text-center font-bold py-2 px-4 rounded transition duration-300">
+                            Encomendar
+                        </a>
+                    </div>
+                    
+                    <!-- Full Render Commission -->
+                    <div class="commission-card p-6 rounded-lg">
+                        <h3 class="text-xl font-bold mb-2 text-neonpurple">Render Completo</h3>
+                        <p class="text-gray-400 text-sm mb-4">Arte totalmente finalizada</p>
+                        <p class="text-2xl font-bold mb-4">R$ 300-600</p>
+                        <ul class="space-y-2 text-gray-300 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-neonpurple mr-2"></i>
+                                <span>Render completo</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-neonpurple mr-2"></i>
+                                <span>Até 3 personagens</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-neonpurple mr-2"></i>
+                                <span>Fundo detalhado</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-neonpurple mr-2"></i>
+                                <span>Até 3 revisões</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="inline-block w-full bg-transparent border border-neonpurple text-neonpurple hover:bg-neonpurple hover:text-white text-center font-bold py-2 px-4 rounded transition duration-300">
+                            Encomendar
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-900/50 p-6 rounded-lg mb-8">
+                    <h3 class="text-2xl font-bold mb-4 text-neonpink">Termos de Serviço</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="text-lg font-bold mb-2 text-neonblue">Processo</h4>
+                            <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                                <li>Pagamento via PayPal (50% adiantado, 50% na entrega)</li>
+                                <li>Prazo de entrega: 1-4 semanas dependendo da complexidade</li>
+                                <li>Até 3 revisões gratuitas (varia por pacote)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold mb-2 text-neonpurple">Direitos</h4>
+                            <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                                <li>Uso pessoal apenas (licença comercial disponível por +50%)</li>
+                                <li>Eu mantenho os direitos autorais da obra</li>
+                                <li>Você tem direito de uso para fins pessoais</li>
+                                <li>Posso recusar qualquer pedido que vá contra meus princípios</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <a href="#contact" class="inline-block bg-neonred hover:bg-neonpink text-white font-bold py-3 px-6 rounded-full transition duration-300 neon-border hover:animate-pulse">
+                        Solicitar Comissão
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <hr class="section-divider">
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 relative">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 neon-text animate__animated animate__fadeIn">Contato</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Entre em contato para comissões ou colaborações</p>
+            </div>
+            
+            <div class="max-w-2xl mx-auto">
+                <form id="contactForm" class="space-y-6 mb-12 animate__animated animate__fadeIn">
+                    <div>
+                        <label for="name" class="block text-gray-300 mb-2">Nome *</label>
+                        <input type="text" id="name" name="name" required class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-neonpink">
+                    </div>
+                    
+                    <div>
+                        <label for="email" class="block text-gray-300 mb-2">E-mail *</label>
+                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-neonpink">
+                    </div>
+                    
+                    <div>
+                        <label for="subject" class="block text-gray-300 mb-2">Assunto</label>
+                        <select id="subject" name="subject" class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-neonpink">
+                            <option value="commission">Comissão</option>
+                            <option value="collab">Colaboração</option>
+                            <option value="other">Outro</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="message" class="block text-gray-300 mb-2">Mensagem *</label>
+                        <textarea id="message" name="message" rows="5" required class="w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-neonpink"></textarea>
+                    </div>
+                    
+                    <div class="flex items-center">
+                        <input type="checkbox" id="agree" name="agree" required class="mr-2 rounded focus:ring-neonpink">
+                        <label for="agree" class="text-gray-300 text-sm">Concordo com os Termos de Serviço e Política de Privacidade</label>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-neonred hover:bg-neonpink text-white font-bold py-3 px-6 rounded-full transition duration-300 neon-border hover:animate-pulse flex items-center justify-center">
+                        <span id="submitText">Enviar Mensagem</span>
+                        <i class="fas fa-paper-plane ml-2" id="submitIcon"></i>
+                        <i class="fas fa-spinner fa-spin ml-2 hidden" id="submitSpinner"></i>
+                    </button>
+                </form>
+                
+                <div class="text-center animate__animated animate__fadeIn animate__delay-1s">
+                    <h3 class="text-xl font-bold mb-4 text-neonpink">Ou me encontre nas redes sociais</h3>
+                    
+                    <div class="flex justify-center space-x-6">
+                        <a href="https://instagram.com/greyn_art" target="_blank" class="social-icon text-3xl text-neonpink hover:text-white tooltip">
+                            <i class="fab fa-instagram"></i>
+                            <span class="tooltip-text">Instagram</span>
+                        </a>
+                        <a href="https://twitter.com/greyn_art" target="_blank" class="social-icon text-3xl text-neonblue hover:text-white tooltip">
+                            <i class="fab fa-twitter"></i>
+                            <span class="tooltip-text">Twitter</span>
+                        </a>
+                        <a href="https://artstation.com/greyn" target="_blank" class="social-icon text-3xl text-neonpurple hover:text-white tooltip">
+                            <i class="fab fa-artstation"></i>
+                            <span class="tooltip-text">ArtStation</span>
+                        </a>
+                        <a href="https://discord.com/users/greyn" target="_blank" class="social-icon text-3xl text-indigo-400 hover:text-white tooltip">
+                            <i class="fab fa-discord"></i>
+                            <span class="tooltip-text">Discord</span>
+                        </a>
+                    </div>
+                    
+                    <p class="mt-6 text-gray-400">
+                        E-mail direto: <a href="mailto:greyenm@gmail.com" class="text-neonblue hover:underline">greyenm@gmail.com</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 bg-darker border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <a href="#" class="font-mono text-xl font-bold neon-text">GREYN_ART</a>
+                    <p class="text-gray-500 text-sm mt-1">Ilustrações e design por Greyn</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-neonpink transition">Termos de Serviço</a>
+                    <a href="#" class="text-gray-400 hover:text-neonblue transition">Política de Privacidade</a>
+                    <a href="#contact" class="text-gray-400 hover:text-neonpurple transition">Contato</a>
+                </div>
+            </div>
+            
+            <div class="mt-6 text-center md:text-left">
+                <p class="text-gray-400">© 2025 Greyn Art. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        menuToggle.addEventListener('click', function() {
+            mobileMenu.classList.toggle('translate-x-full');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.add('translate-x-full');
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 300);
+            });
+        });
+
+        // Gallery filter
+        const filterButtons = document.querySelectorAll('.gallery-filter');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Update active button
+                filterButtons.forEach(btn => {
+                    btn.classList.remove('bg-neonred', 'bg-neonblue', 'bg-neonpurple', 'text-white');
+                    btn.classList.add('bg-transparent', 'border');
+                    
+                    if(btn.classList.contains('border-neonred')) {
+                        btn.classList.add('text-neonred', 'hover:bg-neonred');
+                    } else if(btn.classList.contains('border-neonblue')) {
+                        btn.classList.add('text-neonblue', 'hover:bg-neonblue');
+                    } else if(btn.classList.contains('border-neonpurple')) {
+                        btn.classList.add('text-neonpurple', 'hover:bg-neonpurple');
+                    }
+                });
+                
+                // Set active button styles based on its color
+                if(this.classList.contains('border-neonred')) {
+                    this.classList.remove('bg-transparent', 'text-neonred', 'hover:bg-neonred');
+                    this.classList.add('bg-neonred', 'text-white');
+                } else if(this.classList.contains('border-neonblue')) {
+                    this.classList.remove('bg-transparent', 'text-neonblue', 'hover:bg-neonblue');
+                    this.classList.add('bg-neonblue', 'text-white');
+                } else if(this.classList.contains('border-neonpurple')) {
+                    this.classList.remove('bg-transparent', 'text-neonpurple', 'hover:bg-neonpurple');
+                    this.classList.add('bg-neonpurple', 'text-white');
+                }
+                
+                // Filter items
+                const category = this.dataset.category;
+                
+                galleryItems.forEach(item => {
+                    if (category === 'all' || item.classList.contains(category)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Lightbox
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.querySelector('.lightbox-close');
+        
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const src = this.dataset.src;
+                lightboxImg.src = src;
+                lightbox.style.display = 'flex';
+                setTimeout(() => {
+                    lightbox.classList.add('show');
+                }, 10);
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        lightboxClose.addEventListener('click', function() {
+            lightbox.classList.remove('show');
+            setTimeout(() => {
+                lightbox.style.display = 'none';
+            }, 300);
+            document.body.style.overflow = 'auto';
+        });
+        
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('show');
+                setTimeout(() => {
+                    lightbox.style.display = 'none';
+                }, 300);
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state
+            const submitText = document.getElementById('submitText');
+            const submitIcon = document.getElementById('submitIcon');
+            const submitSpinner = document.getElementById('submitSpinner');
+            
+            submitText.textContent = 'Enviando...';
+            submitIcon.classList.add('hidden');
+            submitSpinner.classList.remove('hidden');
+            
+            // Simulate form submission
+            setTimeout(() => {
+                // Show success message
+                alert('Mensagem enviada com sucesso! Entrarei em contato em breve.');
+                
+                // Reset form
+                this.reset();
+                
+                // Reset button state
+                submitText.textContent = 'Enviar Mensagem';
+                submitIcon.classList.remove('hidden');
+                submitSpinner.classList.add('hidden');
+            }, 1500);
+        });
+
+        // Scroll progress bar
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollProgress = (scrollTop / scrollHeight) * 100;
+            document.getElementById('progressBar').style.width = scrollProgress + '%';
+            
+            // Show/hide back to top button
+            const backToTop = document.getElementById('backToTop');
+            if (scrollTop > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        // Back to top button
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('translate-x-full')) {
+                        mobileMenu.classList.add('translate-x-full');
+                        setTimeout(() => {
+                            mobileMenu.classList.add('hidden');
+                        }, 300);
+                    }
+                }
+            });
+        });
+        
+        // Animation on scroll
+        const animateOnScroll = function() {
+            const elements = document.querySelectorAll('.animate__animated');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    const animationClass = element.classList.item(1);
+                    element.classList.add(animationClass);
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+    </script>
+</body>
+</html>
