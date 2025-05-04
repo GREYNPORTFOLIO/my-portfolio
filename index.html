@@ -366,6 +366,47 @@
             transform: translateY(-5px);
         }
         
+        .process-step {
+            position: relative;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(10, 10, 10, 0.7);
+            transition: all 0.3s ease;
+        }
+        
+        .process-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255, 42, 109, 0.2);
+        }
+        
+        .process-step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 0;
+            background: linear-gradient(to bottom, #ff2a6d, #05d9e8);
+            transition: height 0.5s ease;
+        }
+        
+        .process-step:hover::before {
+            height: 100%;
+        }
+        
+        .nsfw-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff003c;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 3;
+        }
+        
         @media (max-width: 768px) {
             .hero-text {
                 font-size: 2.5rem;
@@ -378,6 +419,10 @@
             .gallery-caption {
                 bottom: 0;
                 opacity: 1;
+            }
+            
+            .process-steps {
+                flex-direction: column;
             }
         }
     </style>
@@ -405,6 +450,7 @@
             <div class="hidden md:flex space-x-8">
                 <a href="#home" class="nav-link animate__animated animate__fadeIn animate__delay-1s">Início</a>
                 <a href="#gallery" class="nav-link animate__animated animate__fadeIn animate__delay-1s">Galeria</a>
+                <a href="#process" class="nav-link animate__animated animate__fadeIn animate__delay-1s">Processo</a>
                 <a href="#about" class="nav-link animate__animated animate__fadeIn animate__delay-1s">Sobre</a>
                 <a href="#commissions" class="nav-link animate__animated animate__fadeIn animate__delay-1s">Comissões</a>
                 <a href="#contact" class="nav-link animate__animated animate__fadeIn animate__delay-1s">Contato</a>
@@ -420,6 +466,7 @@
         <div class="flex flex-col p-4 space-y-4">
             <a href="#home" class="nav-link py-2">Início</a>
             <a href="#gallery" class="nav-link py-2">Galeria</a>
+            <a href="#process" class="nav-link py-2">Processo</a>
             <a href="#about" class="nav-link py-2">Sobre</a>
             <a href="#commissions" class="nav-link py-2">Comissões</a>
             <a href="#contact" class="nav-link py-2">Contato</a>
@@ -476,6 +523,8 @@
                 <button class="gallery-filter px-4 py-2 rounded-full bg-transparent border border-neonred text-neonred hover:bg-neonred hover:text-white transition font-medium" data-category="fanarts">Fanarts</button>
                 <button class="gallery-filter px-4 py-2 rounded-full bg-transparent border border-neonblue text-neonblue hover:bg-neonblue hover:text-white transition font-medium" data-category="ocs">OCs</button>
                 <button class="gallery-filter px-4 py-2 rounded-full bg-transparent border border-neonpurple text-neonpurple hover:bg-neonpurple hover:text-white transition font-medium" data-category="commissions">Comissões</button>
+                <button class="gallery-filter px-4 py-2 rounded-full bg-transparent border border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-white transition font-medium" data-category="chibi">Chibi</button>
+                <button class="gallery-filter px-4 py-2 rounded-full bg-transparent border border-red-500 text-red-500 hover:bg-red-500 hover:text-white transition font-medium" data-category="nsfw">NSFW</button>
             </div>
             
             <!-- Gallery Grid -->
@@ -533,12 +582,25 @@
                         <p class="text-gray-300 text-sm">Cliente B</p>
                     </div>
                 </div>
-            </div>
-            
-            <div class="text-center mt-12">
-                <a href="#" class="inline-block bg-transparent border border-neonpink text-neonpink hover:bg-neonpink hover:text-white font-bold py-3 px-6 rounded-full transition duration-300">
-                    Ver Mais Trabalhos
-                </a>
+                
+                <!-- Chibi 1 -->
+                <div class="gallery-item chibi" data-src="https://media.discordapp.net/attachments/1029143960968495136/1361536867753005146/5cf9da2c1f5ebe62a14c6565934a9235_high.png?ex=6816d885&is=68158705&hm=26f2f97708d40e65946229f3ecd666a5a773daa04138b75a58701926a11138e1&=&format=webp&quality=lossless&width=470&height=627">
+                    <img src="https://media.discordapp.net/attachments/1029143960968495136/1353305624292622386/77ad7fb2f418678f4e8ca5d261d413d9_high.png?ex=6817e1d4&is=68169054&hm=81efc64698d5343ee929750342f4c5d747c144754a70a82dcd7558fb7f314d1e&=&format=webp&quality=lossless&width=818&height=529" alt="Chibi Character" class="w-full h-auto rounded-lg cursor-pointer">
+                    <div class="gallery-caption">
+                        <p class="text-white font-medium">Chibi</p>
+                        <p class="text-gray-300 text-sm">Personagem Fofo</p>
+                    </div>
+                </div>
+                
+                <!-- NSFW 1 -->
+                <div class="gallery-item nsfw" data-src="https://media.discordapp.net/attachments/1029143960968495136/1361536867753005146/5cf9da2c1f5ebe62a14c6565934a9235_high.png?ex=6816d885&is=68158705&hm=26f2f97708d40e65946229f3ecd666a5a773daa04138b75a58701926a11138e1&=&format=webp&quality=lossless&width=470&height=627">
+                    <div class="nsfw-badge">NSFW</div>
+                    <img src="https://media.discordapp.net/attachments/1029143960968495136/1353305624292622386/77ad7fb2f418678f4e8ca5d261d413d9_high.png?ex=6817e1d4&is=68169054&hm=81efc64698d5343ee929750342f4c5d747c144754a70a82dcd7558fb7f314d1e&=&format=webp&quality=lossless&width=818&height=529" alt="NSFW Art" class="w-full h-auto rounded-lg cursor-pointer">
+                    <div class="gallery-caption">
+                        <p class="text-white font-medium">NSFW</p>
+                        <p class="text-gray-300 text-sm">Conteúdo Adulto</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -548,6 +610,86 @@
         <span class="lightbox-close">&times;</span>
         <img class="lightbox-content" id="lightbox-img">
     </div>
+
+    <hr class="section-divider">
+
+    <!-- Art Process Section -->
+    <section id="process" class="py-20 bg-darker/50 backdrop-blur-sm">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4 neon-text animate__animated animate__fadeIn">Processo Criativo</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Do esboço inicial até a arte finalizada</p>
+            </div>
+            
+            <div class="max-w-5xl mx-auto">
+                <div class="grid md:grid-cols-4 gap-6 process-steps">
+                    <!-- Step 1 -->
+                    <div class="process-step">
+                        <div class="text-neonpink text-4xl mb-4">1</div>
+                        <h3 class="text-xl font-bold mb-2 text-neonpink">Esboço</h3>
+                        <p class="text-gray-300">Definição da composição e formas básicas do desenho com linhas soltas e gestuais.</p>
+                        <div class="mt-4">
+                            <img src="https://media.discordapp.net/attachments/1029143960968495136/1363312619234005192/54215041ad39e72a0d6c96742831374b_high.png?ex=68180851&is=6816b6d1&hm=40df3e4b74ed34db65bde19b5a062b10567610ef4a7704bc79be439ebe1df308&=&format=webp&quality=lossless&width=818&height=468" alt="Esboço" class="w-full h-auto rounded-lg">
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="process-step">
+                        <div class="text-neonblue text-4xl mb-4">2</div>
+                        <h3 class="text-xl font-bold mb-2 text-neonblue">Lineart</h3>
+                        <p class="text-gray-300">Refinamento das linhas, definição de contornos e detalhes com traços precisos.</p>
+                        <div class="mt-4">
+                            <img src="https://media.discordapp.net/attachments/1029143960968495136/1363312619234005192/54215041ad39e72a0d6c96742831374b_high.png?ex=68180851&is=6816b6d1&hm=40df3e4b74ed34db65bde19b5a062b10567610ef4a7704bc79be439ebe1df308&=&format=webp&quality=lossless&width=818&height=468" alt="Lineart" class="w-full h-auto rounded-lg">
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="process-step">
+                        <div class="text-neonpurple text-4xl mb-4">3</div>
+                        <h3 class="text-xl font-bold mb-2 text-neonpurple">Base Colors</h3>
+                        <p class="text-gray-300">Aplicação das cores base, definição da paleta e separação de camadas por elementos.</p>
+                        <div class="mt-4">
+                            <img src="https://media.discordapp.net/attachments/1029143960968495136/1363312619234005192/54215041ad39e72a0d6c96742831374b_high.png?ex=68180851&is=6816b6d1&hm=40df3e4b74ed34db65bde19b5a062b10567610ef4a7704bc79be439ebe1df308&=&format=webp&quality=lossless&width=818&height=468" alt="Base Colors" class="w-full h-auto rounded-lg">
+                        </div>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="process-step">
+                        <div class="text-neonred text-4xl mb-4">4</div>
+                        <h3 class="text-xl font-bold mb-2 text-neonred">Render Final</h3>
+                        <p class="text-gray-300">Aplicação de sombras, luzes, texturas e efeitos especiais para finalização da arte.</p>
+                        <div class="mt-4">
+                            <img src="https://media.discordapp.net/attachments/1029143960968495136/1363312619234005192/54215041ad39e72a0d6c96742831374b_high.png?ex=68180851&is=6816b6d1&hm=40df3e4b74ed34db65bde19b5a062b10567610ef4a7704bc79be439ebe1df308&=&format=webp&quality=lossless&width=818&height=468" alt="Render Final" class="w-full h-auto rounded-lg">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 bg-gray-900/50 p-6 rounded-lg">
+                    <h3 class="text-2xl font-bold mb-4 text-neonblue">Técnicas e Ferramentas</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="text-lg font-bold mb-2 text-neonpink">Processo Digital</h4>
+                            <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                                <li>Uso de camadas separadas para cada elemento</li>
+                                <li>Método de pintura digital com pincéis personalizados</li>
+                                <li>Utilização de modos de mesclagem para efeitos especiais</li>
+                                <li>Correção de cores e ajustes pós-produção</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-bold mb-2 text-neonpurple">Ferramentas</h4>
+                            <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                                <li>Clip Studio Paint para ilustração e pintura</li>
+                                <li>Photoshop para ajustes finais e efeitos</li>
+                                <li>Blender para referências 3D e cenários</li>
+                                <li>Tablet Wacom Cintiq 22HD para precisão</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <hr class="section-divider">
 
@@ -873,7 +1015,7 @@
             button.addEventListener('click', function() {
                 // Update active button
                 filterButtons.forEach(btn => {
-                    btn.classList.remove('bg-neonred', 'bg-neonblue', 'bg-neonpurple', 'text-white');
+                    btn.classList.remove('bg-neonred', 'bg-neonblue', 'bg-neonpurple', 'bg-yellow-400', 'bg-red-500', 'text-white');
                     btn.classList.add('bg-transparent', 'border');
                     
                     if(btn.classList.contains('border-neonred')) {
@@ -882,6 +1024,10 @@
                         btn.classList.add('text-neonblue', 'hover:bg-neonblue');
                     } else if(btn.classList.contains('border-neonpurple')) {
                         btn.classList.add('text-neonpurple', 'hover:bg-neonpurple');
+                    } else if(btn.classList.contains('border-yellow-400')) {
+                        btn.classList.add('text-yellow-400', 'hover:bg-yellow-400');
+                    } else if(btn.classList.contains('border-red-500')) {
+                        btn.classList.add('text-red-500', 'hover:bg-red-500');
                     }
                 });
                 
@@ -895,6 +1041,12 @@
                 } else if(this.classList.contains('border-neonpurple')) {
                     this.classList.remove('bg-transparent', 'text-neonpurple', 'hover:bg-neonpurple');
                     this.classList.add('bg-neonpurple', 'text-white');
+                } else if(this.classList.contains('border-yellow-400')) {
+                    this.classList.remove('bg-transparent', 'text-yellow-400', 'hover:bg-yellow-400');
+                    this.classList.add('bg-yellow-400', 'text-white');
+                } else if(this.classList.contains('border-red-500')) {
+                    this.classList.remove('bg-transparent', 'text-red-500', 'hover:bg-red-500');
+                    this.classList.add('bg-red-500', 'text-white');
                 }
                 
                 // Filter items
