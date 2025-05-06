@@ -133,7 +133,7 @@
         .gallery-item:hover .gallery-caption {
             bottom: 0;
         }
-        
+           
         .lightbox {
             display: none;
             position: fixed;
@@ -407,6 +407,103 @@
             z-index: 3;
         }
         
+        .commission-status {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(5, 5, 5, 0.9);
+            border: 1px solid #ff2a6d;
+            border-radius: 20px;
+            padding: 10px 20px;
+            box-shadow: 0 0 10px rgba(255, 42, 109, 0.5);
+            display: flex;
+            align-items: center;
+        }
+        
+        .commission-status.open {
+            border-color: #05d9e8;
+            box-shadow: 0 0 10px rgba(5, 217, 232, 0.5);
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-dot.open {
+            background-color: #05d9e8;
+            box-shadow: 0 0 10px #05d9e8;
+        }
+        
+        .status-dot.closed {
+            background-color: #ff003c;
+            box-shadow: 0 0 10px #ff003c;
+        }
+        
+        .do-dont-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .do-column, .dont-column {
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .do-column {
+            background: rgba(5, 217, 232, 0.1);
+            border: 1px solid #05d9e8;
+        }
+        
+        .dont-column {
+            background: rgba(255, 0, 60, 0.1);
+            border: 1px solid #ff003c;
+        }
+        
+        .do-dont-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .do-title {
+            color: #05d9e8;
+        }
+        
+        .dont-title {
+            color: #ff003c;
+        }
+        
+        .do-dont-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .do-dont-list li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .do-dont-list li:before {
+            content: "•";
+            margin-right: 8px;
+            font-size: 1.5rem;
+        }
+        
+        .do-dont-list li.do:before {
+            color: #05d9e8;
+        }
+        
+        .do-dont-list li.dont:before {
+            color: #ff003c;
+        }
+        
         @media (max-width: 768px) {
             .hero-text {
                 font-size: 2.5rem;
@@ -424,10 +521,36 @@
             .process-steps {
                 flex-direction: column;
             }
+            
+            .commission-status {
+                top: 70px;
+                right: 10px;
+                font-size: 0.9rem;
+                padding: 8px 15px;
+            }
+            
+            .do-dont-container {
+                grid-template-columns: 1fr;
+          }
+       
+    @media (max-width: 768px) {
+        .hero-text {
+            font-size: 2.5rem;
+        }
+
+        .shape-1, .shape-2, .shape-3 {
+            display: none;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Commission Status Indicator -->
+    <div class="commission-status animate__animated animate__fadeInDown animate__delay-1s">
+        <div class="status-dot open"></div>
+        <span>Commissions: open</span>
+    </div>
+
     <!-- Floating background shapes -->
     <div class="floating-shape shape-1"></div>
     <div class="floating-shape shape-2"></div>
@@ -495,8 +618,8 @@
                     <a href="https://twitter.com/greyn_art" target="_blank" class="social-icon text-2xl text-neonblue hover:text-white">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <a href="https://artstation.com/greyn" target="_blank" class="social-icon text-2xl text-neonpurple hover:text-white">
-                        <i class="fab fa-artstation"></i>
+                    <a href="https://discord.com/users/565679376646012928" target="_blank" class="social-icon text-2xl text-indigo-400 hover:text-white">
+                        <i class="fab fa-discord"></i>
                     </a>
                 </div>
             </div>
@@ -601,6 +724,25 @@
                         <p class="text-gray-300 text-sm">Conteúdo Adulto</p>
                     </div>
                 </div>
+                
+                <!-- Chibi 2 -->
+                <div class="gallery-item chibi" data-src="https://media.discordapp.net/attachments/1029143960968495136/1368564329431044156/8ff55c5350e978a21d8684d40186415b_high.png?ex=6818ae5a&is=68175cda&hm=dab24042e2f7d7dddae5e07c58c27d2ce3fad727b8d935a4c2e6a34c392d8a02&=&format=webp&quality=lossless&width=818&height=546">
+                    <img src="https://media.discordapp.net/attachments/1029143960968495136/1368564329431044156/8ff55c5350e978a21d8684d40186415b_high.png?ex=6818ae5a&is=68175cda&hm=dab24042e2f7d7dddae5e07c58c27d2ce3fad727b8d935a4c2e6a34c392d8a02&=&format=webp&quality=lossless&width=818&height=546" alt="Chibi Character 2" class="w-full h-auto rounded-lg cursor-pointer">
+                    <div class="gallery-caption">
+                        <p class="text-white font-medium">Chibi</p>
+                        <p class="text-gray-300 text-sm">Personagem Fofo 2</p>
+                    </div>
+                </div>
+                
+                <!-- NSFW 2 -->
+                <div class="gallery-item nsfw" data-src="https://media.discordapp.net/attachments/1029143960968495136/1368536295797686363/b2f725348e2b9e6eac954957a52c06be_high.png?ex=6818943f&is=681742bf&hm=4ad88fd0c86719725c22b89bfb3e54ae6cac0ad44a453ca18b9ccf16d875cc44&=&format=webp&quality=lossless&width=356&height=627">
+                    <div class="nsfw-badge">NSFW</div>
+                    <img src="https://media.discordapp.net/attachments/1029143960968495136/1368536295797686363/b2f725348e2b9e6eac954957a52c06be_high.png?ex=6818943f&is=681742bf&hm=4ad88fd0c86719725c22b89bfb3e54ae6cac0ad44a453ca18b9ccf16d875cc44&=&format=webp&quality=lossless&width=356&height=627" alt="NSFW Art 2" class="w-full h-auto rounded-lg cursor-pointer">
+                    <div class="gallery-caption">
+                        <p class="text-white font-medium">NSFW</p>
+                        <p class="text-gray-300 text-sm">Conteúdo Adulto 2</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -627,7 +769,7 @@
                     <div class="process-step">
                         <div class="text-neonpink text-4xl mb-4">1</div>
                         <h3 class="text-xl font-bold mb-2 text-neonpink">Esboço</h3>
-                        <p class="text-gray-300">Definição da composição e formas básicas do desenho com linhas soltas e gestuais.</p>
+                        <p class="text-gray-300">Definição da composição và formas básicas do desenho com linhas soltas e gestuais.</p>
                         <div class="mt-4">
                             <img src="https://media.discordapp.net/attachments/1029143960968495136/1363312619234005192/54215041ad39e72a0d6c96742831374b_high.png?ex=68180851&is=6816b6d1&hm=40df3e4b74ed34db65bde19b5a062b10567610ef4a7704bc79be439ebe1df308&=&format=webp&quality=lossless&width=818&height=468" alt="Esboço" class="w-full h-auto rounded-lg">
                         </div>
@@ -867,7 +1009,33 @@
                     </div>
                 </div>
                 
-                <div class="text-center">
+                <div class="do-dont-container">
+                    <div class="do-column">
+                        <h3 class="do-dont-title do-title">Faço</h3>
+                        <ul class="do-dont-list">
+                            <li class="do">Fanart</li>
+                            <li class="do">NSFW</li>
+                            <li class="do">Furry</li>
+                            <li class="do">Gore</li>
+                            <li class="do">Mecha</li>
+                            <li class="do">Personagens originais</li>
+                            <li class="do">Emote</li>
+                        </ul>
+                    </div>
+                    <div class="dont-column">
+                        <h3 class="do-dont-title dont-title">Não faço</h3>
+                        <ul class="do-dont-list">
+                            <li class="dont">Realismo</li>
+                            <li class="dont">NFTs</li>
+                            <li class="dont">Modelagem 3D</li>
+                            <li class="dont">Logotipos</li>
+                            <li class="dont">desenho feio</li>
+
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-8">
                     <a href="#contact" class="inline-block bg-neonred hover:bg-neonpink text-white font-bold py-3 px-6 rounded-full transition duration-300 neon-border hover:animate-pulse">
                         Solicitar Comissão
                     </a>
@@ -936,11 +1104,7 @@
                             <i class="fab fa-twitter"></i>
                             <span class="tooltip-text">Twitter</span>
                         </a>
-                        <a href="https://artstation.com/greyn" target="_blank" class="social-icon text-3xl text-neonpurple hover:text-white tooltip">
-                            <i class="fab fa-artstation"></i>
-                            <span class="tooltip-text">ArtStation</span>
-                        </a>
-                        <a href="https://discord.com/users/greyn" target="_blank" class="social-icon text-3xl text-indigo-400 hover:text-white tooltip">
+                        <a href="https://discord.com/users/565679376646012928" target="_blank" class="social-icon text-3xl text-indigo-400 hover:text-white tooltip">
                             <i class="fab fa-discord"></i>
                             <span class="tooltip-text">Discord</span>
                         </a>
@@ -1163,7 +1327,7 @@
             });
         });
         
-        // Animation on scroll
+                // Animation on scroll
         const animateOnScroll = function() {
             const elements = document.querySelectorAll('.animate__animated');
             
