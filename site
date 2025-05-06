@@ -133,7 +133,7 @@
         .gallery-item:hover .gallery-caption {
             bottom: 0;
         }
-        
+           
         .lightbox {
             display: none;
             position: fixed;
@@ -531,6 +531,15 @@
             
             .do-dont-container {
                 grid-template-columns: 1fr;
+          }
+       
+    @media (max-width: 768px) {
+        .hero-text {
+            font-size: 2.5rem;
+        }
+
+        .shape-1, .shape-2, .shape-3 {
+            display: none;
             }
         }
     </style>
@@ -539,7 +548,7 @@
     <!-- Commission Status Indicator -->
     <div class="commission-status animate__animated animate__fadeInDown animate__delay-1s">
         <div class="status-dot open"></div>
-        <span>Commissions: OPEN</span>
+        <span>Commissions: open</span>
     </div>
 
     <!-- Floating background shapes -->
@@ -1010,7 +1019,7 @@
                             <li class="do">Gore</li>
                             <li class="do">Mecha</li>
                             <li class="do">Personagens originais</li>
-                            <li class="do">Ilustrações de cenas</li>
+                            <li class="do">Emote</li>
                         </ul>
                     </div>
                     <div class="dont-column">
@@ -1020,9 +1029,8 @@
                             <li class="dont">NFTs</li>
                             <li class="dont">Modelagem 3D</li>
                             <li class="dont">Logotipos</li>
-                            <li class="dont">Design de personagens</li>
-                            <li class="dont">Cópia de outros estilos</li>
-                            <li class="dont">Conteúdo ilegal</li>
+                            <li class="dont">desenho feio</li>
+
                         </ul>
                     </div>
                 </div>
@@ -1319,6 +1327,23 @@
             });
         });
         
-        // Animation on scroll
-        const animateOnScroll = function
+                // Animation on scroll
+        const animateOnScroll = function() {
+            const elements = document.querySelectorAll('.animate__animated');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    const animationClass = element.classList.item(1);
+                    element.classList.add(animationClass);
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+    </script>
+</body>
 </html>
